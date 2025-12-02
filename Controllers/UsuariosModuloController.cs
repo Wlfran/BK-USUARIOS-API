@@ -24,7 +24,7 @@ namespace Users_Module.Controllers
              string? contrato,
              string? areaEjecucion,
              int? anio,
-             int? mes,
+             string? mes,
              string? estado,
              DateTime? fechaCreacion,
              string sortBy = "IdSolicitud",
@@ -38,6 +38,14 @@ namespace Users_Module.Controllers
                 sortBy, sortDirection, skip, take);
 
             return Ok(result);
+        }
+
+        [HttpGet("pendientesById")]
+        public async Task<IActionResult> GetSolicitudesById(int numSolicitud)
+        {
+            var data = await _usuariosModuloService.GetSolicitudesByIdAsync(numSolicitud);
+
+            return Ok(new { data, totalRows = data.Count() });
         }
 
 

@@ -24,6 +24,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUsuariosModuloService, UsuariosModuloService>();
+builder.Services.AddScoped<IPersonalContratoService, PersonalContratoService>();
+
 
 var app = builder.Build();
 

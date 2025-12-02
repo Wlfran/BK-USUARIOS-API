@@ -24,7 +24,7 @@ namespace Users_Module.Services
                 string? contrato,
                 string? areaEjecucion,
                 int? anio,
-                int? mes,
+                string? mes,
                 string? estado,
                 DateTime? fechaCreacion,
                 string sortBy,
@@ -65,6 +65,22 @@ namespace Users_Module.Services
                 Data = data,
                 TotalRows = total
             };
+        }
+
+        public async Task<IEnumerable<UsuariosDetalleDTO>> GetSolicitudesByIdAsync(int idSolicitudes)
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            var parameters = new
+            {
+                numSolicitud = idSolicitudes,
+            };
+
+            return await connection.QueryAsync<UsuariosDetalleDTO>(
+                "NewWebContratistas_RWUsuarios_ObtenerDetallePorId",
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure
+            );
         }
     }
 }
