@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Users_Module.Controllers.PersonalContratoController",
+    "Method": "GetPersonalPorContrato",
+    "RelativePath": "api/PersonalContrato/{numeroContrato}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numeroContrato",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Users_Module.Controllers.UsuariosModuloController",
     "Method": "ObtenerPendientes",
     "RelativePath": "api/UsuariosModulo/pendientes",
@@ -39,7 +55,7 @@
       },
       {
         "Name": "mes",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -69,6 +85,22 @@
       },
       {
         "Name": "take",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Users_Module.Controllers.UsuariosModuloController",
+    "Method": "GetSolicitudesById",
+    "RelativePath": "api/UsuariosModulo/pendientesById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numSolicitud",
         "Type": "System.Int32",
         "IsRequired": false
       }

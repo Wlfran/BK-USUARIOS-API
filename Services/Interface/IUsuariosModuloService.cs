@@ -1,4 +1,5 @@
-﻿using Users_Module.Models.Response;
+﻿using Users_Module.Models;
+using Users_Module.Models.Response;
 
 namespace Users_Module.Services.Interface
 {
@@ -11,7 +12,7 @@ namespace Users_Module.Services.Interface
             string? contrato,
             string? areaEjecucion,
             int? anio,
-            int? mes,
+            string? mes,
             string? estado,
             DateTime? fechaCreacion,
             string sortBy,
@@ -19,5 +20,7 @@ namespace Users_Module.Services.Interface
             int skip,
             int take
         );
+
+        Task<IEnumerable<UsuariosDetalleDTO>> GetSolicitudesByIdAsync(int idSolicitudes);
     }
 }

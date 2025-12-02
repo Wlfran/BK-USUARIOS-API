@@ -5,6 +5,28 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/PersonalContrato/{numeroContrato}": {
+      "get": {
+        "tags": [
+          "PersonalContrato"
+        ],
+        "parameters": [
+          {
+            "name": "numeroContrato",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/UsuariosModulo/pendientes": {
       "get": {
         "tags": [
@@ -59,8 +81,7 @@
             "name": "mes",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -110,6 +131,28 @@
               "type": "integer",
               "format": "int32",
               "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UsuariosModulo/pendientesById": {
+      "get": {
+        "tags": [
+          "UsuariosModulo"
+        ],
+        "parameters": [
+          {
+            "name": "numSolicitud",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],

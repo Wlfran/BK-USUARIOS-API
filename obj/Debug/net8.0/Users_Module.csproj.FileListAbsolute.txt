@@ -79,3 +79,4 @@ C:\Users\forerwl\source\repos\Users_Module\Users_Module\obj\Debug\net8.0\refint\
 C:\Users\forerwl\source\repos\Users_Module\Users_Module\obj\Debug\net8.0\Users_Module.pdb
 C:\Users\forerwl\source\repos\Users_Module\Users_Module\obj\Debug\net8.0\Users_Module.genruntimeconfig.cache
 C:\Users\forerwl\source\repos\Users_Module\Users_Module\obj\Debug\net8.0\ref\Users_Module.dll
+C:\Users\forerwl\source\repos\Users_Module\Users_Module\obj\Debug\net8.0\Users_Module.sourcelink.json
