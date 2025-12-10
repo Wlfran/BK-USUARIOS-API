@@ -25,6 +25,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUsuariosModuloService, UsuariosModuloService>();
 builder.Services.AddScoped<IPersonalContratoService, PersonalContratoService>();
+builder.Services.AddScoped<IUsuariosModuloDetalleService, UsuariosModuloDetalleService>();
 
 
 var app = builder.Build();
