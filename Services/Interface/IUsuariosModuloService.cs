@@ -18,7 +18,8 @@ namespace Users_Module.Services.Interface
             string sortBy,
             string sortDirection,
             int skip,
-            int take
+            int take,
+            string? cedula = null
         );
 
         Task<IEnumerable<UsuariosDetalleDTO>> GetSolicitudesByIdAsync(int idSolicitudes);

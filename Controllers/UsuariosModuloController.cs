@@ -30,12 +30,12 @@ namespace Users_Module.Controllers
              string sortBy = "IdSolicitud",
              string sortDirection = "ASC",
              int skip = 0,
-             int take = 10)
+             int take = 10, string? cedula = null)
         {
             var result = await _usuariosModuloService.ObtenerPendientesAsync(
                 numeroSolicitud, filter, empresa, contrato, areaEjecucion,
                 anio, mes, estado, fechaCreacion,
-                sortBy, sortDirection, skip, take);
+                sortBy, sortDirection, skip, take, cedula);
 
             return Ok(result);
         }

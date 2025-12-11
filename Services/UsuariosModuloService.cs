@@ -30,7 +30,8 @@ namespace Users_Module.Services
                 string sortBy,
                 string sortDirection,
                 int skip,
-                int take)
+                int take,
+                string? cedula = null)
         {
             using var conn = new SqlConnection(_connectionString);
 
@@ -51,14 +52,18 @@ namespace Users_Module.Services
                     SortBy = sortBy,
                     SortDirection = sortDirection,
                     Skip = skip,
-                    Take = take
+                    Take = take,
+                    Cedula = cedula
                 },
                 commandType: CommandType.StoredProcedure
             );
 
             var data = (await multi.ReadAsync<UsuariosPendientesDto>()).ToList();
 
-            int total = data.Count;
+            int total = await multi.ReadFirstOrDefaultAsync<int>();
+
+            if (total == 0 && data.Count > 0)
+                total = data.Count;
 
             return new UsuariosPendientesResponse
             {
