@@ -87,5 +87,28 @@ namespace Users_Module.Services
                 commandType: System.Data.CommandType.StoredProcedure
             );
         }
+
+        public async Task<bool> ActualizarEstadoSolicitudAsync(ActualizarEstadoSolicitudDto dto)
+        {
+            using var conn = new SqlConnection(_connectionString);
+
+            var p = new DynamicParameters();
+            p.Add("@IdSolicitud", dto.IdSolicitud);
+            p.Add("@Estado", dto.NuevoEstado);
+            p.Add("returnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+            await conn.ExecuteAsync(
+                "NewWebContratistas_RWUsuarios_ActualizarEstadoSolicitud",
+                p,
+                commandType: CommandType.StoredProcedure
+            );
+
+            int filas = p.Get<int>("returnValue");
+
+            return filas > 0;
+        }
+
+
+
     }
 }

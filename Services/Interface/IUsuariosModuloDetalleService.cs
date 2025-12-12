@@ -1,4 +1,5 @@
 ﻿using Users_Module.Models;
+using Users_Module.Models.Request;
 
 namespace Users_Module.Services.Interface
 {
@@ -6,5 +7,6 @@ namespace Users_Module.Services.Interface
     {
         Task GuardarBorradorAsync(BorradorEjecucionDto dto);
         Task<string?> ObtenerBorradorAsync(int idSolicitud, string usuario);
+        Task RegistrarRetirosAsync(RegistrarRetiroRequest request);
     }
 }

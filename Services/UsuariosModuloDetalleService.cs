@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Users_Module.Models;
+using Users_Module.Models.Request;
 using Users_Module.Services.Interface;
 
 namespace Users_Module.Services
@@ -43,6 +44,32 @@ namespace Users_Module.Services
                 IdSolicitud = idSolicitud,
                 Usuario = usuario
             });
+        }
+
+        public async Task RegistrarRetirosAsync(RegistrarRetiroRequest request)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            foreach (var c in request.Contratistas)
+            {
+                var sql = @"
+                INSERT INTO Modulo_Usuarios_Solicitudes_Detalle
+                (IdSolicitud, Cedula, Nombre, FechaInicio, FechaRetiro, Comentarios, CreadoPor)
+                VALUES
+                (@IdSolicitud, @Cedula, @Nombre, @FechaInicio, @FechaRetiro, @Comentarios, @CreadoPor)";
+
+                await connection.ExecuteAsync(sql, new
+                {
+                    IdSolicitud = request.IdSolicitud,
+                    Cedula = c.Cedula,
+                    Nombre = c.Nombre,
+                    FechaInicio = c.FechaInicio,
+                    FechaRetiro = c.FechaRetiro,
+                    Comentarios = c.Comentarios,
+                    CreadoPor = request.Usuario
+                });
+            }
         }
 
     }

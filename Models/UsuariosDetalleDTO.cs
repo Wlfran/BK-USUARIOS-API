@@ -15,5 +15,9 @@
         public DateTime fechaAccion { get; set; }
         public string accion { get; set; }
         public string comentario { get; set; }
+        public string fechaFin { get; set; }
+
+        public string nit { get; set; }
+        public string interventor { get; set; }
     }
 }

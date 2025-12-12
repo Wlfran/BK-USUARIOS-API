@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Users_Module.Models;
 using Users_Module.Services.Interface;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,8 +49,24 @@ namespace Users_Module.Controllers
             return Ok(new { data, totalRows = data.Count() });
         }
 
+        [HttpPut("actualizar-estado")]
+        public async Task<IActionResult> ActualizarEstado([FromBody] ActualizarEstadoSolicitudDto dto)
+        {
+            if (dto == null)
+                return BadRequest("Datos inválidos.");
 
+            var ok = await _usuariosModuloService.ActualizarEstadoSolicitudAsync(dto);
 
+            if (!ok)
+                return StatusCode(500, "No se pudo actualizar el estado de la solicitud.");
+
+            return Ok(new
+            {
+                message = "Estado actualizado correctamente",
+                solicitud = dto.IdSolicitud,
+                nuevoEstado = dto.NuevoEstado
+            });
+        }
 
     }
 }

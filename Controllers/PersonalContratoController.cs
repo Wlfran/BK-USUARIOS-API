@@ -22,7 +22,7 @@ namespace Users_Module.Controllers
             var data = await _service.ObtenerPersonalPorContrato(numeroContrato);
 
             if (data == null || !data.Any())
-                return NotFound(new { mensaje = "No existe personal asociado a este contrato." });
+                return Ok(new { mensaje = "No existe personal asociado a este contrato." });
 
             return Ok(data);
         }

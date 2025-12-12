@@ -23,5 +23,8 @@ namespace Users_Module.Services.Interface
         );
 
         Task<IEnumerable<UsuariosDetalleDTO>> GetSolicitudesByIdAsync(int idSolicitudes);
+
+        Task<bool> ActualizarEstadoSolicitudAsync(ActualizarEstadoSolicitudDto dto);
+
     }
 }

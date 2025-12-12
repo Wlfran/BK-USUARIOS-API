@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Users_Module.Models;
+using Users_Module.Models.Request;
 using Users_Module.Services.Interface;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,6 +38,17 @@ namespace Users_Module.Controllers
         {
             var json = await _usuariosModuloService.ObtenerBorradorAsync(idSolicitud, usuario);
             return Ok(new { json });
+        }
+
+        [HttpPost("registrar-retiro")]
+        public async Task<IActionResult> RegistrarRetiro([FromBody] RegistrarRetiroRequest request)
+        {
+            if (request.Contratistas == null || request.Contratistas.Count == 0)
+                return BadRequest("No hay contratistas para registrar.");
+
+            await _usuariosModuloService.RegistrarRetirosAsync(request);
+
+            return Ok(new { mensaje = "Retiros registrados correctamente." });
         }
     }
 }
