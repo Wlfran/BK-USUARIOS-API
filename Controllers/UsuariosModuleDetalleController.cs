@@ -50,5 +50,12 @@ namespace Users_Module.Controllers
 
             return Ok(new { mensaje = "Retiros registrados correctamente." });
         }
+
+        [HttpGet("detalle/{idSolicitud:int}")]
+        public async Task<IActionResult> ObtenerDetalle(int idSolicitud)
+        {
+            var detalle = await _usuariosModuloService.ObtenerDetalleAsync(idSolicitud);
+            return Ok(detalle);
+        }
     }
 }
