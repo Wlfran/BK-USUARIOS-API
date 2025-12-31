@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Users_Module.Models;
 using Users_Module.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Users_Module.Controllers
 {
@@ -26,5 +25,71 @@ namespace Users_Module.Controllers
 
             return Ok(data);
         }
+
+        [HttpPost("preview-excel")]
+        public async Task<IActionResult> PreviewExcel(IFormFile archivo)
+        {
+            var resultado = await _service.PreviewExcelAsync(archivo);
+            return Ok(resultado);
+        }
+
+        [HttpPost("confirmar-carga")]
+        public async Task<IActionResult> ConfirmarCarga(
+            [FromBody] IEnumerable<UsuarioTarjetaPreviewDto> usuarios,
+            [FromQuery] string? usuario)
+        {
+            var insertados = await _service.ConfirmarCargaAsync(usuarios, usuario);
+
+            return Ok(new
+            {
+                mensaje = "Carga realizada correctamente",
+                registrosInsertados = insertados
+            });
+        }
+
+        [HttpGet("usuarios-tarjeta")]
+        public async Task<IActionResult> ObtenerUsuariosTarjeta(
+            [FromQuery] string? nombrePila,
+            [FromQuery] string? apellido,
+            [FromQuery] string? cedula,
+            [FromQuery] string? grupo,
+            [FromQuery] string? usuarioCarga,
+            [FromQuery] int? anio,
+            [FromQuery] string? mes,
+            [FromQuery] DateTime? fechaActivacion,
+            [FromQuery] DateTime? fechaCarga,
+            [FromQuery] string? filter,
+            [FromQuery] string sortBy = "FechaCarga",
+            [FromQuery] string sortDirection = "DESC",
+            [FromQuery] int skip = 0,
+            [FromQuery] int take = 10
+        )
+        {
+            var (data, totalRows) = await _service.ObtenerUsuariosTarjetaAsync(
+                nombrePila,
+                apellido,
+                cedula,
+                grupo,
+                usuarioCarga,
+                anio,
+                mes,
+                fechaActivacion,
+                fechaCarga,
+                filter,
+                sortBy,
+                sortDirection,
+                skip,
+                take
+            );
+
+            return Ok(new
+            {
+                data,
+                totalRows,
+                skip,
+                take
+            });
+        }
+
     }
 }
