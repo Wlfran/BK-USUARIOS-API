@@ -95,6 +95,7 @@ namespace Users_Module.Services
             var p = new DynamicParameters();
             p.Add("@IdSolicitud", dto.IdSolicitud);
             p.Add("@Estado", dto.NuevoEstado);
+            p.Add("@EsObligatorio", dto.EsObligatorio ? 1 : 0);
             p.Add("returnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
             await conn.ExecuteAsync(

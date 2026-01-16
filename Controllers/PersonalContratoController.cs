@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Users_Module.Models;
 using Users_Module.Services;
+using Users_Module.Services.Interface;
 
 namespace Users_Module.Controllers
 {
@@ -9,10 +10,12 @@ namespace Users_Module.Controllers
     public class PersonalContratoController : ControllerBase
     {
         private readonly IPersonalContratoService _service;
+        private readonly IUsuariosTarjetaTemplateService _templateService;
 
-        public PersonalContratoController(IPersonalContratoService service)
+        public PersonalContratoController(IPersonalContratoService service, IUsuariosTarjetaTemplateService templateService)
         {
             _service = service;
+            _templateService = templateService;
         }
 
         [HttpGet("{numeroContrato}")]
@@ -89,6 +92,18 @@ namespace Users_Module.Controllers
                 skip,
                 take
             });
+        }
+
+        [HttpGet("descargar-plantilla-usuarios-tarjeta")]
+        public IActionResult DescargarPlantillaUsuariosTarjeta()
+        {
+            var fileBytes = _templateService.DescargarPlantillaUsuariosTarjeta();
+
+            return File(
+                fileBytes,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Plantilla_Usuarios_Tarjeta.xlsx"
+            );
         }
 
     }

@@ -3,7 +3,6 @@ using Users_Module.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalAndProd", policy =>
@@ -26,6 +25,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUsuariosModuloService, UsuariosModuloService>();
 builder.Services.AddScoped<IPersonalContratoService, PersonalContratoService>();
 builder.Services.AddScoped<IUsuariosModuloDetalleService, UsuariosModuloDetalleService>();
+builder.Services.AddScoped<IUsuariosTarjetaTemplateService, UsuariosTarjetaTemplateService>();
+
 
 
 var app = builder.Build();

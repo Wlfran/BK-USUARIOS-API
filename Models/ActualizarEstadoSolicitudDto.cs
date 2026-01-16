@@ -4,5 +4,6 @@
     {
         public int IdSolicitud { get; set; }
         public string NuevoEstado { get; set; } = string.Empty;
+        public bool EsObligatorio { get; set; }
     }
 }
