@@ -68,6 +68,19 @@ namespace Users_Module.Controllers
             });
         }
 
+        [HttpPost("cerrar-sin-novedades")]
+        public async Task<IActionResult> CerrarSinNovedades([FromBody] CerrarSolicitudDto dto)
+        {
+            var result = await _usuariosModuloService
+                .CerrarSolicitudSinNovedadesAsync(dto.IdSolicitud, dto.Usuario);
+
+            if (!result)
+                return BadRequest("No se pudo cerrar la solicitud.");
+
+            return Ok(true);
+        }
+
+
     }
 }
 

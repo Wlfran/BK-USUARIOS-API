@@ -109,6 +109,78 @@ namespace Users_Module.Services
             return filas > 0;
         }
 
+        public async Task<bool> CerrarSolicitudSinNovedadesAsync(
+            int idSolicitud,
+            string usuario
+        )
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            using var transaction = connection.BeginTransaction();
+
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@IdSolicitud", idSolicitud);
+                p.Add("@Estado", "Cerrado");
+                p.Add("@EsObligatorio", 1);
+                p.Add("returnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+                await connection.ExecuteAsync(
+                    "NewWebContratistas_RWUsuarios_ActualizarEstadoSolicitud",
+                    p,
+                    transaction,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                var filas = p.Get<int>("returnValue");
+                if (filas <= 0)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+
+                const string insertHistorialSql = @"
+                INSERT INTO Modulo_Usuarios_HistorialReportes
+                (
+                    IdSolicitud,
+                    FechaAccion,
+                    Accion,
+                    Estado,
+                    Comentarios,
+                    EmailUsuario
+                )
+                VALUES
+                (
+                    @IdSolicitud,
+                    GETDATE(),
+                    @Accion,
+                    @Estado,
+                    @Comentarios,
+                    @EmailUsuario
+                )";
+
+                await connection.ExecuteAsync(insertHistorialSql, new
+                {
+                    IdSolicitud = idSolicitud,
+                    Accion = "Reporte sin novedades",
+                    Estado = "Cerrado",
+                    Comentarios = "Solicitud reportada sin novedades",
+                    EmailUsuario = usuario
+                }, transaction);
+
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
+
 
 
     }
