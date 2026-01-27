@@ -74,6 +74,14 @@ namespace Users_Module.Services
                         CreadoPor = request.Usuario,
                         TicketESV = c.TicketESV
                     }, transaction);
+
+                    await InsertarLogAsync(
+                        connection,
+                        transaction,
+                        request.Usuario,
+                        "Retiro contratista",
+                        $"Se reportó retiro de {c.Nombre} (CC {c.Cedula}) en la solicitud {request.IdSolicitud}"
+                    );
                 }
 
                 var totalPersonas = request.Contratistas.Count;
@@ -154,7 +162,38 @@ namespace Users_Module.Services
             );
         }
 
+        private async Task InsertarLogAsync(
+            SqlConnection connection,
+            SqlTransaction transaction,
+            string usuario,
+            string accion,
+            string descripcion
+        )
+        {
+            var sql = @"
+                INSERT INTO Logs_GestionUsuarios
+                (
+                    fecha,
+                    usuario,
+                    accion,
+                    descripcion
+                )
+                VALUES
+                (
+                    GETDATE(),
+                    @Usuario,
+                    @Accion,
+                    @Descripcion
+                );
+            ";
 
+            await connection.ExecuteAsync(sql, new
+            {
+                Usuario = usuario,
+                Accion = accion,
+                Descripcion = descripcion
+            }, transaction);
+        }
 
     }
 }
